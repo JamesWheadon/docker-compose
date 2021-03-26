@@ -1,14 +1,14 @@
 version: '3'
 services:
-  server:
-    image: node.12.18.4
+  api:
+    image: node:12.18.4
     working_dir: /code
-    ports:
+    ports: 
       - 3000:3000
-    environment:
+    environment: 
       - PGUSER=climber
       - PGHOST=db
-      - PGPASSWORD=climberpass
+      - PGPASSWORD=password
       - PGDATABASE=nature
       - PGPORT=5432
     depends_on:
@@ -17,16 +17,16 @@ services:
       - type: bind
         source: ./api
         target: /code
-    command: bash -c "npm install && npm start"
-  
+    command: bash -c "npm install && npm run dev"
+
   db:
     image: postgres:latest
     volumes:
       - "dbdata:/var/lib/postgresql/data"
       - "./db:/docker-entrypoint-initdb.d/:ro"
-    environment:
+    environment: 
       - POSTGRES_DB=nature
       - POSTGRES_USER=climber
-      - POSTGRES_PASSWORD=shelterpass
+      - POSTGRES_PASSWORD=password
 volumes:
   dbdata:
